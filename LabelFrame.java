@@ -1,7 +1,7 @@
-import java.awt.*; // specifies how components are arranged
+import java.awt.*; // carrega todos os componentes do modulo awt
 import javax.swing.*; //carrega todos os componentes do módulo swomg da biblioteca javax
 
-public class LabelFrame extends JFrame 
+public class LabelFrame extends JFrame // define a classe que herda da JFrame
 {
    private final JLabel label1; // JLabel with just text
    private final JLabel label2; // JLabel constructed with text and icon
