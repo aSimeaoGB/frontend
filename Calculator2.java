@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.*;
 
 public class Calculator2 extends JFrame {
@@ -35,11 +35,35 @@ public class Calculator2 extends JFrame {
       lblNotificacao = new JLabel("Resultado: ?");
       add(lblNotificacao);
 
-      CalculatorHandler handler = new CalculatorHandler();
+      TextFieldHandler handler = new TextFieldHandler();
       btnCalcular.addActionListener(handler);
+
+      textField1.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyReleased(KeyEvent e) {
+            if (textField1.getText().length() > 9) {
+               String txtTextField1 = textField1.getText();
+               textField1.setText(txtTextField1.substring(0, 9));
+               lblNotificacao.setText("<html><body>Ops! Este campo está limitado a apenas 9 caracteres");
+
+            }
+         }
+      });
+      textField2.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyReleased(KeyEvent e) {
+            if (textField2.getText().length() > 9) {
+               String txtTextField2 = textField2.getText();
+               textField2.setText(txtTextField2.substring(0, 9));
+               lblNotificacao.setText("<html><body>Ops! Este campo está limitado a apenas 9 caracteres");
+
+            }
+         }
+      });
+
    }
 
-   private class CalculatorHandler implements ActionListener {
+   private class TextFieldHandler implements ActionListener {
       @Override
       public void actionPerformed(ActionEvent event) 
       {
