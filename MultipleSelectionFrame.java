@@ -47,7 +47,7 @@ public class MultipleSelectionFrame extends JFrame // declaração de classe que
       copyJList.setFixedCellWidth(100); // define a largura como 100px
       copyJList.setFixedCellHeight(15); 
       copyJList.setSelectionMode(
-         ListSelectionModel.SINGLE_SELECTION); // define o modo de seleção como um por vez
+         ListSelectionModel.SINGLE_INTERVAL_SELECTION); // define o modo de seleção como um por vez
       add(new JScrollPane(copyJList)); 
 
       copyJButton2 = new JButton("Copy >>>"); //define o nome do botão
@@ -70,7 +70,7 @@ public class MultipleSelectionFrame extends JFrame // declaração de classe que
       copyJList2.setFixedCellWidth(100); // define a largura como 100px
       copyJList2.setFixedCellHeight(15); 
       copyJList2.setSelectionMode(
-         ListSelectionModel.SINGLE_SELECTION); // define o modo de seleção como um por vez
+         ListSelectionModel.SINGLE_INTERVAL_SELECTION); // define o modo de seleção como um por vez
       add(new JScrollPane(copyJList2)); 
 
    } 
