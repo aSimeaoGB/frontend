@@ -1,11 +1,9 @@
-//importação das bibliotecas
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.sql.*;
+// import java.sql.*;
 
-public class TelaDePesquisa extends JFrame // classe que herda o JFrame
-{
+public class TelaDePesquisa extends JFrame {
     public static JLabel lblPesquisa;
     public static JTextField txtPesquisa;
 
@@ -29,7 +27,7 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
     public static int tamanhoInputs = 20;
     public static String txtUsuario = "";
 
-    public TelaDePesquisa() // contrutor
+    public TelaDePesquisa()
     {
         super("Tela de Pesquisa");
         setLayout(new GridLayout(7,1,5,5));
@@ -41,15 +39,17 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
 
         btnPesquisar = new JButton("🔍");
         btnPesquisar.setToolTipText("Pesquisar");
+        btnPesquisar.setEnabled(false);
         linha_lblPesquisa.add(btnPesquisar);
 
-        add(linha_lblPesquisa);// adiciona ao construtor, extremamente necessario, se não não ira aparecer
+        add(linha_lblPesquisa);
 
-        JPanel linha_inputPesquisa = new JPanel(new GridLayout(1, 2));
+        JPanel linha_inputPesquisa = new JPanel(new GridLayout(1, 1));
+
         txtPesquisa = new JTextField(tamanhoInputs);
         linha_inputPesquisa.add(txtPesquisa);
-        
-        add(linha_inputPesquisa);// adiciona ao construtor
+
+        add(linha_inputPesquisa);
 
         JPanel linha_id = new JPanel(new GridLayout(1, 2));
 
@@ -60,7 +60,7 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
         txtId.setEnabled(false);
         linha_id.add(txtId);
 
-        add(linha_id);// adiciona ao construtor
+        add(linha_id);
 
         JPanel linha_nome = new JPanel(new GridLayout(1, 2));
 
@@ -71,7 +71,7 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
         txtNome.setEditable(false);
         linha_nome.add(txtNome);
 
-        add(linha_nome);// adiciona ao construtor
+        add(linha_nome);
 
         JPanel linha_email = new JPanel(new GridLayout(1, 2));
 
@@ -82,32 +82,35 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
         txtEmail.setEditable(false);
         linha_email.add(txtEmail);
 
-        add(linha_email);// adiciona ao construtor
+        add(linha_email);
 
-        JPanel panelBotoes = new JPanel(new GridLayout(1,4));
+        JPanel linha_botoes = new JPanel(new GridLayout(1, 4));
 
-        panelBotoes.setLayout(new GridLayout()); 
         btnPrimeiro = new JButton("<<");
-        panelBotoes.add(btnPrimeiro);
+        btnPrimeiro.setEnabled(false);
+        linha_botoes.add(btnPrimeiro);
 
         btnAnterior = new JButton("<");
-        panelBotoes.add(btnAnterior);
+        btnAnterior.setEnabled(false);
+        linha_botoes.add(btnAnterior);
 
         btnProximo = new JButton(">");
-        panelBotoes.add(btnProximo);
+        btnProximo.setEnabled(false);
+        linha_botoes.add(btnProximo);
 
         btnUltimo = new JButton(">>");
-        panelBotoes.add(btnUltimo);
+        btnUltimo.setEnabled(false);
+        linha_botoes.add(btnUltimo);
 
-        add(panelBotoes);// adiciona ao construtor
+        add(linha_botoes);
 
-        JPanel linha_notificacoe = new JPanel(new GridLayout(1,1));
+        JPanel linha_notificacoes = new JPanel(new GridLayout(1, 1));
 
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        linha_notificacoe.add(lblNotificacoes);
+        linha_notificacoes.add(lblNotificacoes);
 
-        add(linha_notificacoe); // adiciona ao construtor
-        
+        add(linha_notificacoes);
+
         btnPesquisar.addActionListener(
             new ActionListener() {
                 @Override
@@ -116,36 +119,108 @@ public class TelaDePesquisa extends JFrame // classe que herda o JFrame
                         lblNotificacoes.setText(setHtmlFormat("Por favor, digite algo e tente novamente."));
                         txtPesquisa.requestFocus();
                         return;
+                    } else {
+                        NavegadorDeRegistro.pesquisar();
                     }
-                    NavegadorDeRegistro.pesquisar();
+                }
+            }
+        );
+
+        btnPrimeiro.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (ntfCampoVazio() == false) {
+                        NavegadorDeRegistro.primeiroRegistro();
+                    }
+                }
+            }
+        );
+
+        btnAnterior.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (ntfCampoVazio() == false) {
+                        NavegadorDeRegistro.registroAnterior();
+                    }
+                }
+            }
+        );
+
+        btnProximo.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (ntfCampoVazio() == false) {
+                        NavegadorDeRegistro.proximoRegistro();
+                    }
+                }
+            }
+        );
+
+        btnUltimo.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (ntfCampoVazio() == false) {
+                        NavegadorDeRegistro.ultimoRegistro();
+                    }
                 }
             }
         );
 
         txtPesquisa.addKeyListener(
             new KeyAdapter() {
+                @Override
                 public void keyReleased(KeyEvent e) {
-                    if (txtPesquisa.getText().trim().equals(txtUsuario) == false){
-                        btnPesquisar.setEnabled(true);
+                    if (txtPesquisa.getText().trim().equals(txtUsuario) == false && txtPesquisa.getText().trim().length() > 0) {
+                        if (e.getKeyCode() == 10) {
+                            NavegadorDeRegistro.pesquisar();
+                        }
                     } else {
-                        btnPesquisar.setEnabled(false);
+                        limparCampos("Digite algo para continuar.");
                     }
+                    btnPesquisar.setEnabled(true);
                 }
             }
         );
 
-        setSize(250, 300); 
-        setVisible(true); 
+        setSize(250, 300);
+        setVisible(true);
         txtPesquisa.requestFocus();
     }
 
+    public static boolean ntfCampoVazio() {
+        if (txtPesquisa.getText().trim().length() <= 0) {
+            lblNotificacoes.setText(setHtmlFormat("Ops! Campo vazio. Por favor, digite algo e tente novamente."));
+            txtPesquisa.requestFocus();
+            return true;
+        } else {
+            return false;
+        }
+}
+
+    public static void limparCampos(String notificacao) {
+        btnPesquisar.setEnabled(false);
+        txtId.setText("");
+        txtNome.setText("");
+        txtEmail.setText("");
+        btnPrimeiro.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnProximo.setEnabled(false);
+        btnUltimo.setEnabled(false);
+        if (notificacao.equals("") == false) {
+            lblNotificacoes.setText(setHtmlFormat(notificacao));
+        }
+    }
+
     public static String setHtmlFormat(String strTexto) {
-        return "<html><body>" + strTexto + "</body></html>"; 
+        return "<html><body>" + strTexto + "</body></html>";
     }
 
     public static void main(String[] args) {
-        TelaDePesquisa appTelaDeCadastro = new TelaDePesquisa();
-        appTelaDeCadastro.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        TelaDePesquisa appTelaDePesquisa = new TelaDePesquisa();
+        appTelaDePesquisa.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
 }
