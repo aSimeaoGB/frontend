@@ -7,7 +7,6 @@ public class NavegadorDeRegistro extends TelaDeAtualizacao { // declaração de 
     // Método que populará uma lista de IDs a partir da base de dados
     public static void popularIds() {
         try {
-
             // Cria uma lista temporária para armazenar os IDs
             ArrayList<String> idsTemp = new ArrayList<>();
             idsTemp.add("Selecione aqui o id"); // Opção inicial
@@ -41,12 +40,12 @@ public class NavegadorDeRegistro extends TelaDeAtualizacao { // declaração de 
             String atualizarSenha = "";
 
             // Verifica se o nome foi alterado
-            if (!txtNome.getText().trim().equals(nomeAtual)) {
+            if (txtNome.getText().trim().equals(nomeAtual) == false) {
                 atualizarNome = "`nome` = '" + txtNome.getText() + "'";
             }
 
             // Verifica se o email foi alterado
-            if (!txtEmail.getText().trim().equals(emailAtual)) {
+            if (txtEmail.getText().trim().equals(emailAtual) == false) {
                 if (atualizarNome.length() > 0) {
                     atualizarEmail = " and ";
                 }
@@ -54,18 +53,16 @@ public class NavegadorDeRegistro extends TelaDeAtualizacao { // declaração de 
             }
 
             // Verifica se a senha foi alterada
-            if (!String.valueOf(txtSenha.getPassword()).trim().equals(senhaAtual)) {
+            if (String.valueOf(txtSenha.getPassword()).trim().equals(senhaAtual) == false) {
                 if (atualizarNome.length() > 0 || atualizarEmail.length() > 0) {
                     atualizarSenha = " and ";
                 }
-                atualizarSenha += "`senha` = '" + String.valueOf(txtSenha.getPassword()) + "'";
-            }
+                atualizarSenha += "`senha` = '" + String.valueOf(txtSenha.getPassword()) + "'";            }
 
             // Se houver alterações, realiza a atualização no banco de dados
             if (atualizarNome.length() > 0 || atualizarEmail.length() > 0 || atualizarSenha.length() > 0) {
                 Connection conexao = MySQLConnector.conectar();
                 String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set " + atualizarNome + atualizarEmail + atualizarSenha + " where `id` = " + cbxId.getSelectedItem().toString() + ";";
-                System.out.println(strSqlAtualizarId);
                 Statement stmSqlAtualizarId = conexao.createStatement();
                 stmSqlAtualizarId.addBatch(strSqlAtualizarId);
                 stmSqlAtualizarId.executeBatch();

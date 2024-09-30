@@ -43,48 +43,63 @@ public class TelaDeAtualizacao extends JFrame { // Classe TelaDeAtualização qu
         NavegadorDeRegistro.popularIds();
         cbxId = new JComboBox(ids);  // ComboBox com os IDs
         linha_id.add(cbxId);
+
         add(linha_id);  // Adiciona o painel à tela
 
         // Painel para entrada de Nome
         JPanel linha_nome = new JPanel(new GridLayout(1, 2));
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);  // Rótulo do Nome
         linha_nome.add(lblNome);
+
         txtNome = new JTextField(tamanhoInputs);  // Campo de texto para Nome
         linha_nome.add(txtNome);
+
         add(linha_nome);  // Adiciona o painel à tela
 
         // Painel para entrada de Email
         JPanel linha_email = new JPanel(new GridLayout(1, 2));
+
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);  // Rótulo do Email
         linha_email.add(lblEmail);
+
         txtEmail = new JTextField(tamanhoInputs);  // Campo de texto para Email
         linha_email.add(txtEmail);
+
         add(linha_email);  // Adiciona o painel à tela
 
         // Painel para entrada de Senha
         JPanel linha_senha = new JPanel(new GridLayout(1, 2));
+
         lblSenha = new JLabel("Senha:", SwingConstants.RIGHT);  // Rótulo da Senha
         linha_senha.add(lblSenha);
+
         txtSenha = new JPasswordField(tamanhoInputs);  // Campo de senha para Senha
         linha_senha.add(txtSenha);
+
         add(linha_senha);  // Adiciona o painel à tela
 
         // Painel para botões
         JPanel linha_botoes = new JPanel(new GridLayout(1, 2));
+
         btnAtualizar = new JButton("Atualizar");  // Botão de Atualizar
         linha_botoes.add(btnAtualizar);
+
         btnCancelar = new JButton("Cancelar");  // Botão de Cancelar
         linha_botoes.add(btnCancelar);
+
         add(linha_botoes);  // Adiciona o painel à tela
 
         // Painel para notificações
         JPanel linha_notificacoes = new JPanel(new GridLayout(1, 1));
+
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);  // Rótulo de notificações
         linha_notificacoes.add(lblNotificacoes);
+
         add(linha_notificacoes);  // Adiciona o painel à tela
 
         // Ação do botão Atualizar
-        btnAtualizar.addActionListener(new ActionListener() {
+        btnAtualizar.addActionListener(
+            new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 NavegadorDeRegistro.atualizarId();  // Chama o método para atualizar o registro
@@ -92,7 +107,8 @@ public class TelaDeAtualizacao extends JFrame { // Classe TelaDeAtualização qu
         });
 
         // Ação do botão Cancelar
-        btnCancelar.addActionListener(new ActionListener() {
+        btnCancelar.addActionListener(
+            new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 NavegadorDeRegistro.limparCampos();  // Chama o método para limpar os campos
@@ -100,7 +116,8 @@ public class TelaDeAtualizacao extends JFrame { // Classe TelaDeAtualização qu
         });
 
         // Ação quando um item é selecionado no ComboBox
-        cbxId.addItemListener(new ItemListener() {
+        cbxId.addItemListener(
+            new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -111,8 +128,6 @@ public class TelaDeAtualizacao extends JFrame { // Classe TelaDeAtualização qu
 
         // Configurações da janela
         setSize(250, 300);  // Tamanho da janela
-        ImageIcon img = new ImageIcon("./senac-logo.png");  // Ícone da janela
-        setIconImage(img.getImage());
         setVisible(true);  // Torna a janela visível
         cbxId.requestFocus();  // Foca no ComboBox de IDs
     }
